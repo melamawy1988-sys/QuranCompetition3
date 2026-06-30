@@ -254,3 +254,47 @@ padding:15px 40px;
 }
 
 }
+form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.input-group{
+
+display:flex;
+
+flex-direction:column;
+
+text-align:right;
+
+}
+
+.input-group label{
+
+margin-bottom:8px;
+
+font-weight:bold;
+
+font-size:18px;
+
+}
+
+.input-group input,
+.input-group select{
+
+padding:15px;
+
+border:none;
+
+border-radius:10px;
+
+font-size:18px;
+
+outline:none;
+
+}
