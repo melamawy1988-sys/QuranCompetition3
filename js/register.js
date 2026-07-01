@@ -1,3 +1,4 @@
+// تعبئة قائمة الأجزاء
 const select = document.getElementById("parts");
 
 for (let i = 1; i <= 30; i++) {
@@ -7,30 +8,45 @@ for (let i = 1; i <= 30; i++) {
     select.appendChild(option);
 }
 
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
+// عند الضغط على حفظ
+document.getElementById("registerForm").addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
-    const name = document.getElementById("name").value;
+    const name = document.getElementById("name").value.trim();
     const age = parseInt(document.getElementById("age").value);
-    const national = document.getElementById("national").value;
+    const national = document.getElementById("national").value.trim();
     const parts = parseInt(document.getElementById("parts").value);
 
-    const { data, error } = await supabase
-        .from("participants")
-        .insert([
-            {
-                name: name,
-                age: age,
-                national_id: national,
-                parts: parts
-            }
-        ]);
+    if (national.length !== 14) {
+        alert("الرقم القومي يجب أن يكون 14 رقمًا");
+        return;
+    }
 
-    if (error) {
-        alert("خطأ:\n" + error.message);
-    } else {
+    try {
+
+        const { error } = await db
+            .from("participants")
+            .insert([
+                {
+                    name: name,
+                    age: age,
+                    national_id: national,
+                    parts: parts
+                }
+            ]);
+
+        if (error) {
+            alert("خطأ:\n" + error.message);
+            return;
+        }
+
         alert("✅ تم حفظ البيانات بنجاح");
+
+        document.getElementById("registerForm").reset();
+
+    } catch (err) {
+        alert(err.message);
     }
 
 });
