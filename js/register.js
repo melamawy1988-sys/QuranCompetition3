@@ -1,8 +1,19 @@
-alert("تم تحميل register.js");
-
-const form = document.getElementById("registerForm");
-
-form.addEventListener("submit", function (e) {
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("تم الضغط على زر الحفظ");
+
+    try {
+        const { data, error } = await db
+            .from("participants")
+            .select("*")
+            .limit(1);
+
+        if (error) {
+            alert(error.message);
+        } else {
+            alert("تم الاتصال بقاعدة البيانات بنجاح");
+        }
+
+    } catch (err) {
+        alert(err.message);
+    }
 });
